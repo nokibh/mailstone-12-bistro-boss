@@ -1,25 +1,22 @@
-import { useEffect, useState } from 'react';
 import SectionTitle from '../../Components/SectionTitle/SectionTitle';
+import useMenu from '../../Hooks/UseMenu';
+import OrderTab from '../OrderTab';
 
 const Recommend = () => {
-  const [menu, setMenu] = useState([]);
-  useEffect(() => {
-    fetch('menu.json')
-      .then(res => res.json())
-      .then(data => {
-        const popularItems = data.filter(item => item.category === 'salad');
+  const [menu] = useMenu();
 
-        setMenu(popularItems);
-      });
-  }, []);
-  console.log(menu);
+  const dessert = menu.filter(item => item.category === 'dessert');
+  const dessertSlice = dessert.slice(0, 3);
+  console.log(dessertSlice);
   return (
     <div>
-      <div>{menu.length}</div>
       <SectionTitle
         subHeading="Should Try"
         heading="Chef Recommends"
       ></SectionTitle>
+      <div>
+        <OrderTab items={dessertSlice}></OrderTab>
+      </div>
     </div>
   );
 };
