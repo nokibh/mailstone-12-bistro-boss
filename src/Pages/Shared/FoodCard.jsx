@@ -1,19 +1,24 @@
 import Swal from 'sweetalert2';
 import UseAuth from '../../Hooks/UseAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useCart from '../../Hooks/useCart';
+import { ref } from 'firebase/storage';
+// import axios from 'axios';
 // import { toast } from 'react-toastify';
 
 const FoodCard = ({ item }) => {
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { user } = UseAuth();
   const location = useLocation();
   const { image, price, recipe, name, _id } = item;
+  const [, refetch] = useCart();
   const handleAddCart = food => {
     // console.log(food,user.email);
     if (user && user.email) {
       // Send cart item to the database
-      console.log(user.email, food);
+      // console.log(user.email, food);
       const cartItem = {
         menuId: _id,
         email: user.email,
@@ -21,11 +26,11 @@ const FoodCard = ({ item }) => {
         image,
         price,
       };
-      axios.post('http://localhost:7000/carts', cartItem).then(res => {
+      axiosSecure.post('/carts', cartItem).then(res => {
         console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({
-            title: 'Item Add your Card',
+            title: `${name} Added your Card`,
             showClass: {
               popup: `
       animate__animated
@@ -43,6 +48,8 @@ const FoodCard = ({ item }) => {
           });
         }
       });
+      // refetch cart to update the cart items
+      refetch();
     } else {
       Swal.fire({
         title: 'You Are Not Login!',
