@@ -8,6 +8,7 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Swal from 'sweetalert2';
+import SocialLogin from '../../Components/SectionTitle/SocialLogin/SocialLogin';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const Login = () => {
     `,
         },
       });
-      navigate(form, { replace: true });
+      navigate('/');
     });
   };
   useEffect(() => {
@@ -130,6 +131,9 @@ const Login = () => {
                 />
               </div>
             </form>
+            <p>
+              <SocialLogin></SocialLogin>
+            </p>
             <p>
               <small>
                 New Here? <Link to="/signUp">SignUp</Link>
