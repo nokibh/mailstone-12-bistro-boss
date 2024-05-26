@@ -13,8 +13,8 @@ import {
 import { IoIosContacts } from 'react-icons/io';
 import { TiThMenu } from 'react-icons/ti';
 import { NavLink, Outlet } from 'react-router-dom';
-import useCart from '../Hooks/useCart';
-import useAdmin from '../Hooks/useAdmin';
+import useCart from '../../Hooks/useCart';
+import useAdmin from '../../Hooks/useAdmin';
 
 const Dashboard = () => {
   const [cart] = useCart();
@@ -35,7 +35,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/addItem">
+                <NavLink to="/dashboard/addItems">
                   <FaUtensils></FaUtensils>
                   Add Item
                 </NavLink>
